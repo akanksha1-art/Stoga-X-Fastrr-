@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fastrr × Stoga — Checkout + Engage Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:ital,wght@0,500;0,600;0,700;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D0F0C;
+    --ink-2:#161914;
+    --lime:#C6F432;
+    --lime-dark:#5F7F00;
+    --lime-100:#F1FBC8;
+    --lime-150:#E2F59A;
+    --muted:#565B52;
+    --muted-2:#8A8F84;
+    --line:#E4E7DD;
+    --paper:#FFFFFF;
+    --bg:#F7F8F3;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.01em;margin:0;font-weight:700;}
+  p{margin:0;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  a{color:inherit;}
+  ::selection{background:var(--lime);color:var(--ink);}
+
+  .fmark{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;}
+  .fmark .bar{width:16px;height:5px;border-radius:3px;background:#6037D7;transform:rotate(-16deg);}
+  .fmark .bar:nth-child(1){margin-bottom:2px;}
+  .fmark-col{display:flex;flex-direction:column;gap:2px;}
+  .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-style:italic;font-size:19px;color:var(--ink);letter-spacing:-0.01em;}
+  .on-dark .wordmark, footer .wordmark{color:#fff;}
+  .on-dark .fmark .bar, footer .fmark .bar{background:#B79CFF;}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(13,15,12,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08);}
+  .nav-inner{max-width:1120px;margin:0 auto;padding:15px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-brand{display:flex;align-items:center;gap:9px;}
+  .nav-links{display:flex;gap:20px;font-size:12px;font-weight:500;color:#A9AEA0;}
+  .nav-links a{text-decoration:none;}
+  .nav-links a:hover{color:var(--lime);}
+  .nav-tag{font-size:12px;font-weight:700;color:var(--ink);background:var(--lime);padding:7px 13px;border-radius:999px;}
+  @media (max-width:1000px){.nav-links{display:none;}}
+
+  /* hero */
+  .hero{background:var(--ink);color:#fff;padding:74px 0 54px;position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;top:-160px;right:-140px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle, rgba(198,244,50,.22) 0%, transparent 68%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:2;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:8px 14px;border-radius:999px;margin-bottom:26px;}
+  .hero h1{font-size:clamp(30px,4.4vw,50px);font-weight:700;line-height:1.14;max-width:860px;margin-bottom:20px;color:#fff;}
+  .hero h1 span{color:var(--lime);}
+  .hero .sub{font-size:16px;line-height:1.68;color:#BFC4B6;max-width:660px;margin-bottom:32px;}
+  .hero-meta{display:flex;flex-wrap:wrap;border:1px solid rgba(255,255,255,.14);border-radius:14px;overflow:hidden;max-width:860px;background:rgba(255,255,255,.03);}
+  .hero-meta div{flex:1;min-width:170px;padding:14px 18px;border-right:1px solid rgba(255,255,255,.1);}
+  .hero-meta div:last-child{border-right:none;}
+  .hero-meta .k{font-size:10.2px;text-transform:uppercase;letter-spacing:.07em;color:#7E8476;font-weight:600;margin-bottom:5px;}
+  .hero-meta .v{font-size:12.8px;font-weight:600;color:#fff;}
+  .scale-strip{display:flex;flex-wrap:wrap;gap:30px;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.12);}
+  .scale-item .n{font-family:'Space Grotesk';font-size:26px;font-weight:700;color:var(--lime);}
+  .scale-item .l{font-size:11px;color:#8F9587;font-weight:600;margin-top:2px;}
+
+  section{padding:66px 0;}
+  .section-head{max-width:720px;margin-bottom:38px;}
+  .kicker{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lime-dark);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .kicker::before{content:"";width:22px;height:3px;background:var(--ink);border-radius:2px;}
+  .section-head h2{font-size:clamp(24px,3vw,33px);font-weight:700;line-height:1.22;margin-bottom:14px;color:var(--ink);}
+  .section-head p{font-size:15px;color:var(--muted);line-height:1.68;}
+  .alt-bg{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+
+  /* diff cards */
+  .diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .diff-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;}
+  .diff-card .dn{font-family:'Space Grotesk';font-size:12px;font-weight:700;color:var(--ink);background:var(--lime);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .diff-card h3{font-size:16.5px;font-weight:700;margin-bottom:9px;line-height:1.3;}
+  .diff-card p{font-size:13px;color:var(--muted);line-height:1.62;}
+  .diff-card .pt{display:inline-block;margin-top:12px;font-size:11px;font-weight:700;color:var(--lime-dark);background:var(--lime-100);padding:4px 10px;border-radius:999px;}
+  @media (max-width:960px){.diff-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.diff-grid{grid-template-columns:1fr;}}
+
+  .cart-wide{margin-top:14px;background:var(--ink);border-radius:20px;padding:30px 30px;color:#fff;display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;position:relative;overflow:hidden;}
+  .cart-wide::before{content:"";position:absolute;top:-90px;left:-90px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle, rgba(198,244,50,.2), transparent 70%);}
+  .cart-wide > div{position:relative;z-index:2;}
+  .cart-wide .ctag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:5px 12px;border-radius:999px;margin-bottom:14px;}
+  .cart-wide h3{font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.28;}
+  .cart-wide p{font-size:13.4px;color:#BFC4B6;line-height:1.66;}
+  .cart-list{display:flex;flex-direction:column;gap:10px;}
+  .cart-item{display:flex;gap:10px;font-size:12.6px;color:#E4E7DD;line-height:1.5;}
+  .cart-item::before{content:"✓";color:var(--lime);font-weight:700;flex-shrink:0;}
+  .cart-item b{color:#fff;}
+  @media (max-width:860px){.cart-wide{grid-template-columns:1fr;}}
+
+  .fit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .fit-card{background:var(--lime-100);border:1px solid var(--lime-150);border-radius:var(--radius);padding:22px;}
+  .fit-card h4{font-size:15px;font-weight:700;margin-bottom:8px;}
+  .fit-card p{font-size:12.6px;color:#3F4A22;line-height:1.6;}
+  @media (max-width:860px){.fit-grid{grid-template-columns:1fr;}}
+
+  /* ecosystem band */
+  .eco-band{background:var(--ink);border-radius:22px;padding:38px 36px;color:#fff;position:relative;overflow:hidden;}
+  .eco-band::after{content:"";position:absolute;right:-80px;bottom:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle, rgba(198,244,50,.2), transparent 70%);}
+  .eco-band h2{position:relative;z-index:2;font-size:clamp(20px,2.6vw,27px);font-weight:700;color:#fff;max-width:640px;line-height:1.3;margin-bottom:12px;}
+  .eco-band > p{position:relative;z-index:2;font-size:13.6px;color:#BFC4B6;line-height:1.7;max-width:660px;}
+  .eco-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.12);border-radius:14px;overflow:hidden;margin-top:26px;}
+  .eco-stat{background:rgba(255,255,255,.04);padding:18px 16px;}
+  .eco-stat .n{font-family:'Space Grotesk';font-size:22px;font-weight:700;color:var(--lime);line-height:1;margin-bottom:6px;}
+  .eco-stat .l{font-size:10.8px;color:#A6AB9D;line-height:1.45;}
+  .eco-foot{position:relative;z-index:2;font-size:10.8px;color:#6F756A;margin-top:14px;}
+  @media (max-width:860px){.eco-grid{grid-template-columns:1fr 1fr;}}
+
+  /* dark commercial pages */
+  .dark-divider{background:var(--ink);padding:62px 0 8px;}
+  .dark-divider .wrap{text-align:center;}
+  .dark-divider .dlabel{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+  .dark-divider h2{font-family:'Space Grotesk';font-size:clamp(30px,5vw,50px);color:#fff;font-weight:700;}
+  .dark-divider .dsub{font-size:13.5px;color:#9EA394;max-width:620px;margin:10px auto 0;line-height:1.6;}
+  .dark-page{background:var(--ink);padding:26px 0 74px;}
+
+  .comm-wrap{border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;background:#151812;margin-top:22px;}
+  .comm-head{padding:18px 24px;background:#1B1F16;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+  .comm-head h3{font-size:16px;color:#fff;font-weight:700;}
+  .comm-head .badge{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:5px 11px;border-radius:999px;}
+  table.comm{width:100%;border-collapse:collapse;}
+  table.comm th{text-align:left;font-size:10.8px;font-weight:700;padding:12px 24px;background:#121510;color:#8F9587;text-transform:uppercase;letter-spacing:.06em;}
+  table.comm td{padding:15px 24px;font-size:13.5px;border-top:1px solid rgba(255,255,255,.08);color:#E4E7DD;vertical-align:middle;}
+  table.comm td.mode{font-weight:600;color:#fff;}
+  table.comm td.rate{font-family:'Space Grotesk';font-size:20px;font-weight:700;color:var(--lime);}
+  table.comm td.ex{font-size:12.5px;color:#9EA394;}
+  table.comm td.ex b{color:#fff;font-weight:600;}
+  table.comm td.note{font-size:12px;color:#9EA394;}
+  table.comm tr.hl td{background:rgba(198,244,50,.06);}
+
+  .two-up{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin-top:16px;}
+  .pcard{background:#151812;border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:24px 26px;}
+  .pcard .ptag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:5px 11px;border-radius:999px;margin-bottom:14px;}
+  .pcard h4{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;}
+  .pcard p{font-size:12.4px;color:#9EA394;line-height:1.6;}
+  .price-pair{display:flex;gap:28px;margin-top:18px;flex-wrap:wrap;}
+  .pp .n{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:#fff;}
+  .pp.hi .n{color:var(--lime);}
+  .pp .l{font-size:10.5px;color:#7E8476;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px;}
+  .pcard .big{font-family:'Space Grotesk';font-size:44px;font-weight:700;color:var(--lime);line-height:1;margin:14px 0 8px;}
+  .pcard .fine{margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.16);font-size:11.8px;color:#9EA394;line-height:1.6;}
+  .pcard .fine b{color:#fff;}
+  @media (max-width:860px){.two-up{grid-template-columns:1fr;}}
+
+  .foot-note{margin-top:16px;font-size:11.8px;color:#8F9587;line-height:1.65;background:rgba(198,244,50,.06);border:1px solid rgba(198,244,50,.2);border-radius:12px;padding:14px 18px;}
+  .foot-note b{color:#fff;}
+
+  /* engage */
+  .eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .eng-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;}
+  .eng-card .eic{width:38px;height:38px;border-radius:10px;background:var(--lime);display:flex;align-items:center;justify-content:center;margin-bottom:13px;}
+  .eng-card .eic svg{width:18px;height:18px;stroke:var(--ink);}
+  .eng-card h4{font-size:15.5px;font-weight:700;margin-bottom:8px;}
+  .eng-card p{font-size:12.8px;color:var(--muted);line-height:1.6;}
+  @media (max-width:960px){.eng-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.eng-grid{grid-template-columns:1fr;}}
+
+  .journey{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  .jstep{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 14px;position:relative;}
+  .jstep .jn{font-family:'Space Grotesk';font-size:11px;font-weight:700;color:var(--lime-dark);letter-spacing:.06em;margin-bottom:8px;}
+  .jstep h5{font-family:'Inter';font-size:13px;font-weight:700;margin:0 0 6px;}
+  .jstep p{font-size:11.6px;color:var(--muted);line-height:1.5;margin-bottom:10px;}
+  .jchip{display:inline-block;font-size:9.8px;font-weight:700;color:var(--ink);background:var(--lime-100);border:1px solid var(--lime-150);padding:3px 8px;border-radius:999px;}
+  @media (max-width:960px){.journey{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.journey{grid-template-columns:1fr;}}
+
+  .plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;}
+  .plan{background:#151812;border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:24px 22px;position:relative;}
+  .plan.best{border-color:var(--lime);background:linear-gradient(160deg,#1B2110 0%,#151812 100%);}
+  .plan .pl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8F9587;margin-bottom:12px;}
+  .plan .pn{font-family:'Space Grotesk';font-size:30px;font-weight:700;color:#fff;}
+  .plan .pn small{font-size:12px;font-weight:500;color:#8F9587;}
+  .plan .pe{font-size:12px;color:#9EA394;margin-top:6px;}
+  .plan .ps{display:inline-block;margin-top:12px;font-size:10.8px;font-weight:700;color:var(--ink);background:var(--lime);padding:4px 10px;border-radius:999px;}
+  .plan .ps.none{background:rgba(255,255,255,.08);color:#B4B9AB;}
+  .plan .rb{position:absolute;top:14px;right:14px;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--lime);padding:3px 9px;border-radius:999px;}
+  @media (max-width:860px){.plan-grid{grid-template-columns:1fr;}}
+
+  /* next steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .step{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px;}
+  .step .sn{font-family:'Space Grotesk';font-size:12px;font-weight:700;color:var(--ink);background:var(--lime);border-radius:8px;padding:5px 10px;display:inline-block;margin-bottom:12px;}
+  .step h4{font-size:15px;font-weight:700;margin-bottom:7px;}
+  .step p{font-size:12.6px;color:var(--muted);line-height:1.58;}
+  @media (max-width:860px){.steps{grid-template-columns:1fr;}}
+
+  .cta-band{margin-top:22px;background:var(--ink);border-radius:20px;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;color:#fff;}
+  .cta-band h3{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;}
+  .cta-band p{font-size:13px;color:#A9AEA0;max-width:520px;line-height:1.6;}
+  .cta-btn{background:var(--lime);color:var(--ink);font-size:13.5px;font-weight:700;padding:13px 26px;border-radius:999px;white-space:nowrap;}
+
+  footer{background:var(--ink);color:#fff;padding:30px 0 30px;border-top:1px solid rgba(255,255,255,.08);}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;}
+  .footer-brand{display:flex;align-items:center;gap:9px;}
+  footer p{color:#8F9587;font-size:11.2px;line-height:1.6;max-width:460px;}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (max-width:640px){section{padding:46px 0;}.wrap{padding:0 20px;} table.comm th, table.comm td{padding:12px 14px;}}
+</style>
+</head>
+<body>
+
+<nav class="on-dark">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="fmark"><div class="fmark-col"><div class="bar"></div><div class="bar"></div></div></div>
+      <span class="wordmark">fastrr</span>
+    </div>
+    <div class="nav-links">
+      <a href="#checkout">Checkout</a>
+      <a href="#comm-checkout">Checkout Commercials</a>
+      <a href="#engage">Engage</a>
+      <a href="#comm-engage">Engage Commercials</a>
+      <a href="#next">Next Steps</a>
+    </div>
+    <div class="nav-tag">For Stoga</div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Checkout + Engage · Final Proposal For Sign-Off</div>
+    <h1>Adjustable dumbbells replaced a whole rack. <span>The right checkout replaces a whole funnel.</span></h1>
+    <p class="sub">Stoga's gear is built to do more in less space. This is fastrr doing the same for your sale — a checkout that knows the delivery network underneath it, and an Engage layer that keeps the customer training long after the order lands. Both, with commercials laid out on their own pages.</p>
+    <div class="hero-meta">
+      <div><div class="k">Prepared For</div><div class="v">Stoga — Growth &amp; D2C Team</div></div>
+      <div><div class="k">Scope</div><div class="v">Checkout · Cart · EDD · Engage</div></div>
+      <div><div class="k">Payments</div><div class="v">PayU Checkout + PayU COD</div></div>
+    </div>
+    <div class="scale-strip">
+      <div class="scale-item"><div class="n">2,500</div><div class="l">Orders</div></div>
+      <div class="scale-item"><div class="n">₹1,000</div><div class="l">Average Order Value</div></div>
+      <div class="scale-item"><div class="n">₹25L</div><div class="l">GMV on 2,500 orders</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= CHECKOUT ================= -->
+<section id="checkout" class="wrap reveal">
+  <div class="section-head">
+    <div class="kicker">Part One — Checkout</div>
+    <h2>What's actually different, in six points</h2>
+    <p>Not a prettier payment screen. A checkout built on the same network that's already carrying Stoga's parcels — Stoga's Track Order page already points to Shiprocket — so what it knows at checkout is what actually happens after.</p>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="dn">01</div>
+      <h3>One network, from click to doorstep</h3>
+      <p>Address data, delivery dates, and return risk all come from real delivered shipments — not a payments-only dataset guessing at what happens after dispatch.</p>
+      <span class="pt">8L+ deliveries every day</span>
+    </div>
+    <div class="diff-card">
+      <div class="dn">02</div>
+      <h3>Addresses that arrive pre-verified</h3>
+      <p>A returning customer's address is recognised and pre-filled from Shiprocket's own delivered-shipment history, so fewer typos become failed deliveries.</p>
+      <span class="pt">95%+ pre-fill · up to 99% Tier 1</span>
+    </div>
+    <div class="diff-card">
+      <div class="dn">03</div>
+      <h3>Delivery dates you can promise</h3>
+      <p>A pincode-accurate EDD on the product page, from live data across 42 couriers. For a considered purchase like adjustable dumbbells, a real date shortens the decision.</p>
+      <span class="pt">96%+ accuracy · 12–22% PDP-to-cart lift</span>
+    </div>
+    <div class="diff-card">
+      <div class="dn">04</div>
+      <h3>Return risk scored before it ships</h3>
+      <p>COD orders are tagged for risk — high-refusal pincodes, first-time buyers — before dispatch. On heavy gear, every RTO costs more, so catching it early matters more.</p>
+      <span class="pt">Up to 45% RTO reduction</span>
+    </div>
+    <div class="diff-card">
+      <div class="dn">05</div>
+      <h3>Payments that stay out of the way</h3>
+      <p>PayU-powered checkout with smart routing that reroutes on failure, and Quick Pay that pins each customer's preferred UPI app as one tap.</p>
+      <span class="pt">UPI at 0.9%</span>
+    </div>
+    <div class="diff-card">
+      <div class="dn">06</div>
+      <h3>Trust and affordability on bigger baskets</h3>
+      <p>Pay After Delivery for the first-time buyer who wants proof before paying, and Snapmint instalments for the higher-ticket kits and dumbbells.</p>
+      <span class="pt">PAD + Snapmint, built in</span>
+    </div>
+  </div>
+
+  <div class="cart-wide">
+    <div>
+      <span class="ctag">Newly Launched</span>
+      <h3>Cart — built to grow a ₹1,000 basket</h3>
+      <p>Stoga's catalogue is full of natural add-ons — belts, wraps, gloves, shaker bottles, bands, mats. The fastrr Cart puts them in front of the customer at exactly the right moment, and keeps every discount readable.</p>
+    </div>
+    <div class="cart-list">
+      <div class="cart-item"><span><b>Complete-the-routine upsell</b> — recommends the accessory that pairs with what's already in the cart.</span></div>
+      <div class="cart-item"><span><b>Milestone bars</b> — live progress to free shipping or the next offer, inside the cart drawer.</span></div>
+      <div class="cart-item"><span><b>Auto-applied best discount</b> — WELCOME10-style codes and offers never fight each other.</span></div>
+      <div class="cart-item"><span><b>Bank offers, separate</b> — card and UPI offers shown as their own block, distinct from Stoga's own codes.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT FITS -->
+<section class="alt-bg reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Why It Fits Stoga</div>
+      <h2>Three things about this catalogue that make the case</h2>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-card">
+        <h4>Heavy gear makes returns expensive</h4>
+        <p>Dumbbells, kits, and mats are bulky parcels. A returned order costs freight both ways — so risk tagging and address accuracy pay back faster here than on a light-parcel brand.</p>
+      </div>
+      <div class="fit-card">
+        <h4>An accessory-heavy basket</h4>
+        <p>Belts, wraps, gloves, bands, shakers — most of Stoga's range is a natural add-on. At a ₹1,000 AOV, a smarter cart is the cheapest way to lift the basket.</p>
+      </div>
+      <div class="fit-card">
+        <h4>Trust is already earned</h4>
+        <p>A 4.98 average across 225 reviews is hard-won. Checkout shouldn't be the step that quietly gives it back.</p>
+      </div>
+    </div>
+
+    <div class="eco-band" style="margin-top:34px;">
+      <h2>Every number here comes from the same network</h2>
+      <p>fastrr sits on Shiprocket's own delivery infrastructure, so EDD, address pre-fill, and risk scoring are drawn from real completed shipments — not projections.</p>
+      <div class="eco-grid">
+        <div class="eco-stat"><div class="n">1,45,000+</div><div class="l">Merchants shipping on the network</div></div>
+        <div class="eco-stat"><div class="n">42M+</div><div class="l">End-consumers in the network</div></div>
+        <div class="eco-stat"><div class="n">620M+</div><div class="l">Real outcomes training the risk model</div></div>
+        <div class="eco-stat"><div class="n">42</div><div class="l">Active courier partners</div></div>
+      </div>
+      <div class="eco-foot">Shiprocket-network benchmarks, to be validated against Stoga's own traffic and orders after go-live.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMMERCIALS — CHECKOUT ================= -->
+<div class="dark-divider on-dark">
+  <div class="wrap">
+    <div class="dlabel">A Page Of Its Own</div>
+    <h2>Checkout Commercials</h2>
+    <p class="dsub">fastrr Checkout with PayU — Checkout, Cart, and EDD, priced separately and plainly.</p>
+  </div>
+</div>
+<section id="comm-checkout" class="dark-page on-dark">
+  <div class="wrap">
+    <div class="comm-wrap">
+      <div class="comm-head">
+        <h3>Checkout — PayU Checkout + PayU COD</h3>
+        <span class="badge">Per transaction</span>
+      </div>
+      <table class="comm">
+        <thead><tr><th>Payment Mode</th><th>Rate</th><th>On a ₹1,000 order</th></tr></thead>
+        <tbody>
+          <tr><td class="mode">COD</td><td class="rate">1%</td><td class="ex"><b>₹10.00</b></td></tr>
+          <tr><td class="mode">UPI</td><td class="rate">0.9%</td><td class="ex"><b>₹9.00</b></td></tr>
+          <tr><td class="mode">Credit Cards · Debit Cards · Wallets · Netbanking</td><td class="rate">1.95%</td><td class="ex"><b>₹19.50</b></td></tr>
+          <tr><td class="mode">Pay After Delivery</td><td class="rate">2.5%</td><td class="ex"><b>₹25.00</b></td></tr>
+          <tr class="hl"><td class="mode">Snapmint</td><td class="rate">4.5%</td><td class="ex"><b>₹45.00</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-up">
+      <div class="pcard">
+        <span class="ptag">Cart</span>
+        <h4>Smart Cart — flat platform fee</h4>
+        <p>Complete-the-routine upsell, milestone bars, auto-applied best discount, and bank offers shown separately. No per-transaction fee on Cart.</p>
+        <div class="price-pair">
+          <div class="pp"><div class="n">$80</div><div class="l">Per Month</div></div>
+          <div class="pp hi"><div class="n">$598</div><div class="l">Per Year</div></div>
+        </div>
+        <div class="fine"><b>Annual plan</b> works out to roughly $50/month — about $362 (~38%) less than paying monthly.</div>
+      </div>
+      <div class="pcard">
+        <span class="ptag">EDD</span>
+        <h4>Delivery date on the product page</h4>
+        <div class="big">₹1</div>
+        <p>Per order — a pincode-accurate estimated delivery date shown on the product page, built from live data across 42 couriers.</p>
+        <div class="fine"><b>On 2,500 orders:</b> ₹2,500 in total.</div>
+      </div>
+    </div>
+
+    <div class="foot-note"><b>Reading this page —</b> Checkout is charged per transaction, by payment mode; the ₹1,000 column is the fee on one order at Stoga's average order value, shown for illustration. Cart is a flat platform fee, billed separately. EDD is charged per order. Applicable taxes extra.</div>
+  </div>
+</section>
+
+<!-- ================= ENGAGE ================= -->
+<section id="engage" class="wrap reveal">
+  <div class="section-head">
+    <div class="kicker">Part Two — Engage</div>
+    <h2>The order is where the customer's training starts, not where the relationship ends</h2>
+    <p>Stoga has already built something most gear brands haven't — dozens of genuinely useful workout guides, from a 20-minute beginner kettlebell routine to a 12-week push-up plan. Engage turns that library into a retention engine, on the channels customers actually read.</p>
+  </div>
+  <div class="eng-grid">
+    <div class="eng-card">
+      <div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <h4>WhatsApp — marketing, utility &amp; chat</h4>
+      <p>Drops, restocks, and cart recovery on marketing; confirmations and shipping updates on utility; and customer-initiated sessions that cost nothing per message.</p>
+    </div>
+    <div class="eng-card">
+      <div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
+      <h4>Instagram &amp; WhatsApp chatbots</h4>
+      <p>Both included in the platform fee — answering product, sizing, and order questions in the DMs where a fitness audience already spends its time.</p>
+    </div>
+    <div class="eng-card">
+      <div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg></div>
+      <h4>AI Calling for COD confirmation</h4>
+      <p>An AI call to verify a COD order before it ships — a direct line to fewer failed deliveries on heavy parcels.</p>
+    </div>
+    <div class="eng-card">
+      <div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 8l8 6 8-6"/></svg></div>
+      <h4>Email, SMS &amp; RCS</h4>
+      <p>The long-form channel for workout programmes, the fast channel for alerts, and RCS for richer, tappable messages where supported.</p>
+    </div>
+    <div class="eng-card">
+      <div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+      <h4>AI Assist Chatbot on the site</h4>
+      <p>An on-site shopping assistant for the "which dumbbells, which belt size" questions — answering instantly, with an add-to-cart card built into the chat.</p>
+    </div>
+    <div class="eng-card">
+      <div class="eic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 16l-6.5 5 2-7.5L2 9h7z"/></svg></div>
+      <h4>A dedicated Growth Manager</h4>
+      <p>Included in the platform fee — a named person running journeys, testing, and reporting, so Engage doesn't become another dashboard nobody opens.</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="alt-bg reveal">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">What It Looks Like</div>
+      <h2>One order, five moments, each on the right channel</h2>
+      <p>A sample lifecycle for a customer who buys their first adjustable dumbbells — built from what Stoga already publishes.</p>
+    </div>
+    <div class="journey">
+      <div class="jstep"><div class="jn">01 · ORDER</div><h5>Confirmed</h5><p>Instant order confirmation with the delivery date.</p><span class="jchip">WhatsApp utility</span></div>
+      <div class="jstep"><div class="jn">02 · VERIFY</div><h5>COD checked</h5><p>An AI call confirms address and intent before dispatch.</p><span class="jchip">AI Calling</span></div>
+      <div class="jstep"><div class="jn">03 · SHIP</div><h5>On its way</h5><p>Shipping and out-for-delivery updates, no support ticket needed.</p><span class="jchip">WhatsApp utility · SMS</span></div>
+      <div class="jstep"><div class="jn">04 · TRAIN</div><h5>First workout</h5><p>The beginner routine or 12-week plan lands the day it arrives.</p><span class="jchip">WhatsApp · Email</span></div>
+      <div class="jstep"><div class="jn">05 · GROW</div><h5>Complete the kit</h5><p>Belt, wraps, or mat suggested once the routine is underway.</p><span class="jchip">WhatsApp marketing</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMMERCIALS — ENGAGE ================= -->
+<div class="dark-divider on-dark">
+  <div class="wrap">
+    <div class="dlabel">A Page Of Its Own</div>
+    <h2>Engage Commercials</h2>
+    <p class="dsub">The full Engage rate card, with platform plans to choose from.</p>
+  </div>
+</div>
+<section id="comm-engage" class="dark-page on-dark">
+  <div class="wrap">
+    <div class="comm-wrap">
+      <div class="comm-head">
+        <h3>Engage Rate Card</h3>
+        <span class="badge">All rates + GST</span>
+      </div>
+      <table class="comm">
+        <thead><tr><th>Deliverable</th><th>Engage Rate</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td class="mode">Platform Fee — Monthly</td><td class="rate">₹10,000</td><td class="note">+ GST · includes Growth Manager, WhatsApp Chatbot &amp; Instagram Chatbot</td></tr>
+          <tr><td class="mode">WhatsApp Marketing</td><td class="rate">₹0.87</td><td class="note">+ GST per message · charged on delivered</td></tr>
+          <tr><td class="mode">WhatsApp Utility</td><td class="rate">₹0.10</td><td class="note">+ GST per message</td></tr>
+          <tr><td class="mode">WhatsApp Session</td><td class="rate">₹0</td><td class="note">Per message — customer-initiated chats are free</td></tr>
+          <tr><td class="mode">Email</td><td class="rate">₹0.04</td><td class="note">+ GST per email</td></tr>
+          <tr><td class="mode">SMS</td><td class="rate">₹0.10</td><td class="note">+ GST per message</td></tr>
+          <tr><td class="mode">RCS</td><td class="rate">₹0.20</td><td class="note">+ GST per message</td></tr>
+          <tr><td class="mode">AI Calling</td><td class="rate">₹3</td><td class="note">+ GST per connected call, per minute</td></tr>
+          <tr><td class="mode">AI Assist Chatbot</td><td class="rate">₹6,000</td><td class="note">+ GST platform fee &amp; 2% of GMV on chatbot-driven conversions</td></tr>
+          <tr><td class="mode">RTO Suite</td><td class="rate">₹4</td><td class="note">+ GST per order · ₹10,000 + GST on 2,500 orders</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="plan-grid">
+      <div class="plan">
+        <div class="pl">Monthly</div>
+        <div class="pn">₹10,000 <small>+ GST</small></div>
+        <div class="pe">₹10,000 per month, billed monthly</div>
+        <span class="ps none">Standard</span>
+      </div>
+      <div class="plan">
+        <div class="pl">Quarterly</div>
+        <div class="pn">₹24,000 <small>+ GST</small></div>
+        <div class="pe">Works out to ₹8,000 per month</div>
+        <span class="ps">Saves ₹6,000 · 20%</span>
+      </div>
+      <div class="plan best">
+        <span class="rb">Best Value</span>
+        <div class="pl">Half-Yearly</div>
+        <div class="pn">₹45,000 <small>+ GST</small></div>
+        <div class="pe">Works out to ₹7,500 per month</div>
+        <span class="ps">Saves ₹15,000 · 25%</span>
+      </div>
+    </div>
+
+    <div class="foot-note"><b>Reading this page —</b> The platform fee covers the Growth Manager and the WhatsApp and Instagram chatbots; message, call, and RTO Suite charges are usage-based on top. Savings are measured against paying ₹10,000 monthly for the same period. Platform plan amounts are also exclusive of GST.</div>
+  </div>
+</section>
+
+<!-- ================= NEXT STEPS ================= -->
+<section id="next" class="wrap reveal">
+  <div class="section-head">
+    <div class="kicker">Getting To Live</div>
+    <h2>Everything is on the table — here's what happens next</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="sn">01</div>
+      <h4>Confirm the plan</h4>
+      <p>Sign off on Checkout, Cart, and EDD, and choose the Engage platform plan — monthly, quarterly, or half-yearly.</p>
+    </div>
+    <div class="step">
+      <div class="sn">02</div>
+      <h4>Set up PayU and integrate</h4>
+      <p>PayU checkout and COD are configured, and fastrr goes onto the store alongside your Growth Manager's Engage setup.</p>
+    </div>
+    <div class="step">
+      <div class="sn">03</div>
+      <h4>Go live, then review together</h4>
+      <p>Once live, the first numbers are reviewed together against Stoga's own traffic and orders, not benchmarks.</p>
+    </div>
+  </div>
+  <div class="cta-band">
+    <div>
+      <h3>Ready when you are.</h3>
+      <p>Checkout, Cart, EDD, and Engage — with the commercials exactly as laid out on the pages above.</p>
+    </div>
+    <div class="cta-btn">Confirm &amp; Kick Off</div>
+  </div>
+</section>
+
+<footer class="on-dark">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="fmark"><div class="fmark-col"><div class="bar"></div><div class="bar"></div></div></div>
+        <span class="wordmark">fastrr</span>
+      </div>
+      <p>Prepared for Stoga — Checkout + Engage. Commercials as stated on the Checkout and Engage commercial pages; no other terms implied.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
